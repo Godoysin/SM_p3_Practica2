@@ -59,18 +59,20 @@ public class FragmentConsole extends Fragment{
         		String mensaje = "Nombre: " + muser.getText().toString() + "\r\n";
         		
         		//Por alguna razón con esto crashea
-        		//Intent intent = new Intent(getActivity(), Comunicaciones.class);
-        		//intent.putExtra("datos", mensaje);
-        		//startActivity(intent);
+        		Intent intent = new Intent(getActivity(), Comunicaciones.class);
+        		intent.putExtra("datos", mensaje);
+        		startActivity(intent);
         		
-        		FragmentTransaction ft =fm.beginTransaction();
+        		//Esto de momento no hace falta, pero está bien y permite
+        		//cambiar un fragmento por otro
+        		//FragmentTransaction ft =fm.beginTransaction();
         		
-        		FragmentServicio f = new FragmentServicio();
-				ft.replace(R.id.fragment_console, f);
+        		//FragmentServicio f = new FragmentServicio();
+				//ft.replace(R.id.fragment_console, f);
         		
-        		ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-    			ft.addToBackStack(null);
-    			ft.commit();
+        		//ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+    			//ft.addToBackStack(null);
+    			//ft.commit();
         	}
         });
         return view;

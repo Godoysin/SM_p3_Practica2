@@ -11,6 +11,6 @@ public class Comunicaciones extends Activity {
 		
 		setContentView(R.layout.servicio);
 		
-		getIntent().getExtras().getString("datos");
+		String mensaje = getIntent().getExtras().getString("datos");
 	}
 }
