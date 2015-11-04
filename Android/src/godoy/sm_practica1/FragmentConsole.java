@@ -58,9 +58,10 @@ public class FragmentConsole extends Fragment{
         		
         		String mensaje = "Nombre: " + muser.getText().toString() + "\r\n";
         		
-        		Intent intent = new Intent(getActivity(), Comunicaciones.class);
-        		intent.putExtra("datos", mensaje);
-        		startActivity(intent);
+        		//Por alguna razón con esto crashea
+        		//Intent intent = new Intent(getActivity(), Comunicaciones.class);
+        		//intent.putExtra("datos", mensaje);
+        		//startActivity(intent);
         		
         		FragmentTransaction ft =fm.beginTransaction();
         		
