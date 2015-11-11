@@ -5,8 +5,11 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class FragmentText extends Fragment{
+	
+	private TextView mtext;
 	
 	public FragmentText(){
         //Definir
@@ -17,6 +20,9 @@ public class FragmentText extends Fragment{
                              Bundle savedInstanceState){
         
         View view = inflater.inflate(R.layout.texto, container, false);
+        
+        mtext = (TextView)view.findViewById(R.id.fragment_text);
+        mtext.setText("Bienvenido");
         
         return view;
     }

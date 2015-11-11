@@ -27,7 +27,5 @@ public class MainActivity extends Activity{
 			ft.add(R.id.fragment_console, console);
 			ft.commit();
 		}
-		
 	}
-	
 }
