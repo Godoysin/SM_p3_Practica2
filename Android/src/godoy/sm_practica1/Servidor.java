@@ -10,6 +10,10 @@ import java.util.Scanner;
 
 public class Servidor{
 	
+	public static final int inicio = 0;
+	public static final int autentificar = 1;
+	public static final int servicio1 = 2;
+	public static final int servicio2 = 3;
 	//Posibles utilidades
 	//Scanner sc = new Scanner(System.in);
 	//List<String> lista = new ArrayList<String>();
@@ -30,10 +34,6 @@ public class Servidor{
 		
 		//Funciones locales
 		int estado;
-		int inicio = 0;
-		int autentificar = 1;
-		int servicio1 = 2;
-		int servicio2 = 3;
 		Boolean fin_conex = false, fin = false;
 		
 		do{
