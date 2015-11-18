@@ -56,7 +56,7 @@ public class FragmentConsole extends Fragment{
 		mbutton.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		
-        		String mensaje = "Nombre: " + muser.getText().toString() + "\r\n";
+        		String mensaje = "Nombre: " + muser.getText().toString();
         		
         		//Por alguna razón con esto crashea
         		Intent intent = new Intent(getActivity(), Comunicaciones.class);

@@ -1,5 +1,4 @@
 package godoy.sm_practica1;
-import java.util.Scanner;
 
 /**
  * Esta clase contiene el interfaz que va a ir en el cliente.
