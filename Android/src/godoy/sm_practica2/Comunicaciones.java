@@ -2,6 +2,7 @@ package godoy.sm_practica2;
 
 import godoy.sm_practica1.R;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -19,6 +20,16 @@ public class Comunicaciones extends Activity implements Cliente{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.servicio);
 		
+		fm = getFragmentManager();
+		//TODO crear un fragmento que referencie a menu_conectar
+		//Usar la clase LOG IN
+		Fragment fragment = fm.findFragmentById(R.id.fragment_console);
+		if (fragment == null) {
+			FragmentTransaction ft = fm.beginTransaction();
+			FragmentConsole console = new FragmentConsole();
+			ft.add(R.id.fragment_console, console);
+			ft.commit();
+		}
 		String user = "";
 		String pass = "";
 		String dom = "";
@@ -36,11 +47,11 @@ public class Comunicaciones extends Activity implements Cliente{
 			if(port.compareTo("") == 0){
 				port = defaultport;
 			}
-			mensaje = user + " " + pass + " " + dom + " " + port;
-			if(mensaje != null){
-				mtext = (TextView)findViewById(R.id.comunicaciones_text);
-		        mtext.setText(mensaje);
-			}
+			//mensaje = user + " " + pass + " " + dom + " " + port;
+			//if(mensaje != null){
+			//	mtext = (TextView)findViewById(R.id.comunicaciones_text);
+		    //    mtext.setText(mensaje);
+			//}
 		}
 		//TODO con los datos intentar conectarme a la máquina de turno
 		//Control de errores

@@ -13,7 +13,6 @@
         android:ems="10"
         android:hint="@string/Usuario"
         android:inputType="textPersonName" >
-
     </EditText>
 
     <EditText
@@ -34,9 +33,7 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="@string/Dominio" />
-        <!--android:layout_marginTop="14dp"-->
         
-    
    <EditText
        android:id="@+id/console_puerto"
        android:layout_width="wrap_content"
@@ -46,8 +43,6 @@
        android:ems="10"
        android:hint="@string/Puerto"
        android:inputType="number" >
-       <!--android:layout_marginBottom="17dp"-->
-       
     </EditText>
     
     <TextView
