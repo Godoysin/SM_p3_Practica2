@@ -1,5 +1,6 @@
-package godoy.sm_practica1;
+package godoy.sm_practica2;
 
+import godoy.sm_practica1.R;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -8,6 +9,8 @@ import android.widget.TextView;
 
 public class Comunicaciones extends Activity implements Cliente{
 	
+	private String defaultdom = "192.168.1.2";
+	private String defaultport = "6000";
 	private TextView mtext;
 	FragmentManager fm = null;
 	
@@ -16,10 +19,24 @@ public class Comunicaciones extends Activity implements Cliente{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.servicio);
 		
-		String mensaje;
+		String user = "";
+		String pass = "";
+		String dom = "";
+		String port = "";
+		String mensaje = "";
 		Bundle extra = getIntent().getExtras();
 		if(extra != null){
-			mensaje = extra.getString("datos");
+			user = extra.getString("user");
+			pass = extra.getString("pass");
+			dom = extra.getString("dom");
+			if(dom.compareTo("") == 0){
+				dom = defaultdom;
+			}
+			port = extra.getString("port");
+			if(port.compareTo("") == 0){
+				port = defaultport;
+			}
+			mensaje = user + " " + pass + " " + dom + " " + port;
 			if(mensaje != null){
 				mtext = (TextView)findViewById(R.id.comunicaciones_text);
 		        mtext.setText(mensaje);

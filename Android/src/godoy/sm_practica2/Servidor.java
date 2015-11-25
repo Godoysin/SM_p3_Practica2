@@ -1,4 +1,4 @@
-package godoy.sm_practica1;
+package godoy.sm_practica2;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

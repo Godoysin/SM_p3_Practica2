@@ -1,4 +1,4 @@
-package godoy.sm_practica1;
+package godoy.sm_practica2;
 
 /**
  * Esta clase contiene el interfaz que va a ir en el cliente.

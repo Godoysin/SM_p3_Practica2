@@ -1,5 +1,6 @@
-package godoy.sm_practica1;
+package godoy.sm_practica2;
 
+import godoy.sm_practica1.R;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -16,9 +17,9 @@ import android.widget.TextView;
 public class FragmentConsole extends Fragment{
 	
 	private EditText muser;
-	//private EditText mpass;
-	//private EditText mdom;
-	//private EditText mport;
+	private EditText mpass;
+	private EditText mdom;
+	private EditText mport;
 	private Button mbutton;
 	//private TextView mtext;
 	
@@ -34,9 +35,9 @@ public class FragmentConsole extends Fragment{
 
 		muser = (EditText)view.findViewById(R.id.console_user);
 		mbutton = (Button) view.findViewById(R.id.console_button);
-        //mpass = (EditText)view.findViewById(R.id.console_pass);
-        //mdom = (EditText)view.findViewById(R.id.console_dominio);
-        //mport = (EditText)view.findViewById(R.id.console_puerto);
+        mpass = (EditText)view.findViewById(R.id.console_pass);
+        mdom = (EditText)view.findViewById(R.id.console_dominio);
+        mport = (EditText)view.findViewById(R.id.console_puerto);
         //mtext = (TextView)view.findViewById(R.id.console_text);
         
         
@@ -56,11 +57,17 @@ public class FragmentConsole extends Fragment{
 		mbutton.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		
-        		String mensaje = "Nombre: " + muser.getText().toString();
+        		String user = muser.getText().toString();
+        		String pass = mpass.getText().toString();
+        		String dom = mdom.getText().toString();
+        		String port = mport.getText().toString();
         		
         		//Por alguna razón con esto crashea
         		Intent intent = new Intent(getActivity(), Comunicaciones.class);
-        		intent.putExtra("datos", mensaje);
+        		intent.putExtra("user", user);
+        		intent.putExtra("pass", pass);
+        		intent.putExtra("dom", dom);
+        		intent.putExtra("port", port);
         		startActivity(intent);
         		
         		//Esto de momento no hace falta, pero está bien y permite

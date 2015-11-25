@@ -1,41 +1,41 @@
-package godoy.sm_practica1;
+package godoy.sm_practica2;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
- * Esta clase controla la lectura de temperatura.
+ * Esta clase controla la lectura de humedad.
  * @author David
  */
 
-public class Temperatura{
+public class Humedad{
 	
 	/**
-	 * Representa la lectura de temperatura.
+	 * Representa la lectura de humedad.
 	 */
-	protected int temperatura;
+	protected double humedad;
 	
 	/**
 	 * Pasa valores al parámetro humedad.
 	 * @param h Lectura de humedad.
 	 */
-	public Temperatura(int t){
+	public Humedad(double h){
 		
-		this.temperatura=t;
+		this.humedad=h;
 	}
 	
 	/**
-	 * Leo una cadena de entrada y lo paso a valores de temperatura.
+	 * Leo una cadena de entrada y lo paso a valores de humedad.
 	 * @param Stream de datos de entrada.
 	 */
-	public Temperatura(DataInputStream dis){
+	public Humedad(DataInputStream dis){
 		
 		try{
-			this.temperatura=dis.readInt();
+			this.humedad=dis.readDouble();
 		} 
 		catch (IOException e) {
 			// TODO Auto-generated catch block
-			this.temperatura=0;
+			this.humedad=0;
 			e.printStackTrace();
 		}
 	}
@@ -44,10 +44,10 @@ public class Temperatura{
 	 * Convierte un cadena de salida a un ByteArray.
 	 * @param dos Cadena de datos de salida.
 	 */
-	public void toByteArray(DataOutputStream dos){
+	public void toByteArray (DataOutputStream dos){
 		
 		try{
-			dos.writeInt(this.temperatura);
+			dos.writeDouble(this.humedad);
 		} 
 		catch (IOException e){
 			// TODO Auto-generated catch block
@@ -56,10 +56,10 @@ public class Temperatura{
 	}
 	
 	/**
-	 * Convierte los datos numéricos de temperatura a un String.
+	 * Convierte los datos numéricos de humedad a un String.
 	 */
 	public String toString(){
 		
-		return Integer.toString(temperatura);
+		return Double.toString(humedad);
 	}
 }

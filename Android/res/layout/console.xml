@@ -32,9 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/console_pass"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
         android:ems="10"
         android:hint="@string/Dominio" />
+        <!--android:layout_marginTop="14dp"-->
+        
     
    <EditText
        android:id="@+id/console_puerto"
@@ -42,10 +43,11 @@
        android:layout_height="wrap_content"
        android:layout_below="@+id/console_dominio"
        android:layout_centerHorizontal="true"
-       android:layout_marginBottom="17dp"
        android:ems="10"
        android:hint="@string/Puerto"
        android:inputType="number" >
+       <!--android:layout_marginBottom="17dp"-->
+       
     </EditText>
     
     <TextView
