@@ -5,18 +5,18 @@
     android:orientation="vertical"
     tools:context=".FragmentServicio" >
     
+    <fragment
+        android:id="@+id/fragment_text"
+        android:name="godoy.sm_practica2.FragmentText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+	
     <FrameLayout
-        android:id="@+id/servicio_1"
+        android:id="@+id/fragment_console2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" >
-    </FrameLayout>
-    
-    <FrameLayout
-        android:id="@+id/servicio_2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_weight="3" >
     </FrameLayout>
     
 </LinearLayout>

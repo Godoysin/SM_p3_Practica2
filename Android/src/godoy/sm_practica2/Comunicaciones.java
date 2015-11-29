@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -12,7 +13,6 @@ public class Comunicaciones extends Activity implements Cliente{
 	
 	private String defaultdom = "192.168.1.2";
 	private String defaultport = "6000";
-	private TextView mtext;
 	FragmentManager fm = null;
 	
 	@Override
@@ -20,39 +20,32 @@ public class Comunicaciones extends Activity implements Cliente{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.servicio);
 		
-		fm = getFragmentManager();
-		//TODO crear un fragmento que referencie a menu_conectar
-		//Usar la clase LOG IN
-		Fragment fragment = fm.findFragmentById(R.id.fragment_console);
-		if (fragment == null) {
-			FragmentTransaction ft = fm.beginTransaction();
-			FragmentConsole console = new FragmentConsole();
-			ft.add(R.id.fragment_console, console);
-			ft.commit();
-		}
+		//Declaraciones
 		String user = "";
 		String pass = "";
 		String dom = "";
 		String port = "";
-		String mensaje = "";
+		
+		//Extraigo los datos del Intent
 		Bundle extra = getIntent().getExtras();
 		if(extra != null){
 			user = extra.getString("user");
 			pass = extra.getString("pass");
 			dom = extra.getString("dom");
+			//Dominio por defecto
 			if(dom.compareTo("") == 0){
 				dom = defaultdom;
 			}
 			port = extra.getString("port");
+			//Puerto por defecto
 			if(port.compareTo("") == 0){
 				port = defaultport;
 			}
-			//mensaje = user + " " + pass + " " + dom + " " + port;
-			//if(mensaje != null){
-			//	mtext = (TextView)findViewById(R.id.comunicaciones_text);
-		    //    mtext.setText(mensaje);
-			//}
 		}
+		
+		//Inicia la conexión con el servidor
+		LogIn(user, pass, dom, port);
+		
 		//TODO con los datos intentar conectarme a la máquina de turno
 		//Control de errores
 		//LogIn(mensaje);
@@ -61,23 +54,23 @@ public class Comunicaciones extends Activity implements Cliente{
 	}
 
 	@Override
-	public String LogIn(String datos){
-		// TODO Auto-generated method stub
-		FragmentTransaction ft =fm.beginTransaction();
-		
-		FragmentServicio f = new FragmentServicio();
-		ft.replace(R.layout.servicio, f);
-		
-		ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-		ft.addToBackStack(null);
-		ft.commit();
-		return null;
+	public void LogIn(String user, String pass, String dominio, String puerto){
+		//Llamo al fragmento que controla la conexion
+		fm = getFragmentManager();
+		Fragment fragment = fm.findFragmentById(R.id.fragment_console2);
+		if (fragment == null) {
+			FragmentTransaction ft = fm.beginTransaction();
+			FragmentConectar conectar = new FragmentConectar();
+			ft.add(R.id.fragment_console2, conectar);
+			ft.commit();
+		}
+		//TODO conexión con el servidor
 	}
 
 	@Override
-	public String LogOut() {
-		// TODO Auto-generated method stub
-		return null;
+	public void LogOut() {
+		//Intent intent = new Intent(this, MainActivity.class);
+		//startActivity(intent);
 	}
 
 	@Override

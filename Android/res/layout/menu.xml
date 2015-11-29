@@ -3,22 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FragmentConectar" >
+    tools:context=".FragmentMenu" >
 
     <Button
-        android:id="@+id/buttonconectar1"
+        android:id="@+id/buttonmenu1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Conectar" />
+        android:text="Operación 1" />
 
     <Button
-        android:id="@+id/buttonconectar2"
+        android:id="@+id/buttonmenu2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonconectar1"
+        android:layout_below="@+id/buttonmenu1"
         android:layout_centerHorizontal="true"
-        android:text="Salir" />
+        android:text="Operación 2" />
 
 </RelativeLayout>

@@ -14,16 +14,14 @@ public interface Cliente{
 	String mensaje = "";
 	
 	/**
-	 * Solicita los datos del cliente para enviárselos al servidor.
-	 * @return Devuelve la información de registro del usuario.
+	 * Gestiona la conexión con el servidor.
 	 */
-	public String LogIn(String datos);
+	public void LogIn(String user, String pass, String dominio, String puerto);
 	
 	/**
 	 * Cierre de sesión
-	 * @return Devuelve un mensaje de cierre de sesión.
 	 */
-	public String LogOut();
+	public void LogOut();
 	
 	/**
 	 * Una de las operaciones a implementar.

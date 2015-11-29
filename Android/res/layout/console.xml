@@ -44,15 +44,6 @@
        android:hint="@string/Puerto"
        android:inputType="number" >
     </EditText>
-    
-    <TextView
-        android:id="@+id/console_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/console_button"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/hello_world" />
 
     <Button
         android:id="@+id/console_button"
