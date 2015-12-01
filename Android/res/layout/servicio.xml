@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FragmentServicio" >
+    tools:context=".Comunicaciones" >
     
     <fragment
         android:id="@+id/fragment_text"

@@ -1,6 +1,6 @@
 package godoy.sm_practica2;
 
-import godoy.sm_practica1.R;
+import godoy.sm_practica2.R;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;

@@ -8,25 +8,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import godoy.sm_practica1.R;
+import android.widget.TextView;
+import godoy.sm_practica2.R;
 
 public class FragmentConectar extends Fragment{
 	
 	private Button mbutton1;
 	private Button mbutton2;
+	private TextView mtext;
+	
+	public FragmentConectar(){
+        //Definir
+    }
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState){
+		
 		View view = inflater.inflate(R.layout.menu_conectar, container, false);
 		
-		mbutton2 = (Button) view.findViewById(R.id.buttonconectar1);
-		mbutton2 = (Button) view.findViewById(R.id.buttonconectar2);
+		mbutton1 = (Button) view.findViewById(R.id.buttonconnect1);
+		mbutton2 = (Button) view.findViewById(R.id.buttonconnect2);
+		mtext = (TextView) view.findViewById(R.id.textconnect);
 		
 		mbutton1.setOnClickListener(new OnClickListener(){
 			public void onClick(View view){
 				//Intento realizar la conexión con el servidor
-				
+				//ConnectivityManager
 			}
 		});
 		

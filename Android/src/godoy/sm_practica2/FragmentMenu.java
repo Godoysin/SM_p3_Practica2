@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import godoy.sm_practica1.R;
+import godoy.sm_practica2.R;
 
 public class FragmentMenu extends Fragment{
 	

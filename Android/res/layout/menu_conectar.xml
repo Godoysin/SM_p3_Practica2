@@ -6,7 +6,7 @@
     tools:context=".FragmentConectar" >
 
     <Button
-        android:id="@+id/buttonconectar1"
+        android:id="@+id/buttonconnect1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -14,11 +14,19 @@
         android:text="Conectar" />
 
     <Button
-        android:id="@+id/buttonconectar2"
+        android:id="@+id/buttonconnect2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonconectar1"
+        android:layout_below="@+id/buttonconnect1"
         android:layout_centerHorizontal="true"
         android:text="Salir" />
+
+    <TextView
+        android:id="@+id/textconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonconnect2"
+        android:layout_centerHorizontal="true"
+        android:text="HOLA" />
 
 </RelativeLayout>
