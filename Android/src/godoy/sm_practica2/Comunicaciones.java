@@ -6,8 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.Socket;
-import java.net.URL;
+import java.net.UnknownHostException;
 import godoy.sm_practica2.R;
 import android.app.Activity;
 import android.app.Fragment;
@@ -21,18 +22,26 @@ import android.widget.Toast;
 
 public class Comunicaciones extends Activity implements Cliente{
 	
-	private String defaultdom = "10.82.117.174";
+	private String defaulthost;
 	private String defaultport = "6000";
 	private String muser = "";
 	private String mpass = "";
 	private String mhost = "";
 	private String mport = "";
 	FragmentManager fm = null;
+	Mensaje mensaje;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.servicio);
+		
+		//Obtendo la ip de mi equipo
+		try {
+			defaulthost = InetAddress.getLocalHost().getHostAddress().toString();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 		
 		//Extraigo los datos del Intent
 		Bundle extra = getIntent().getExtras();
@@ -42,7 +51,7 @@ public class Comunicaciones extends Activity implements Cliente{
 			this.mhost = extra.getString("dom");
 			//Dominio por defecto
 			if(mhost.compareTo("") == 0){
-				this.mhost = defaultdom;
+				this.mhost = defaulthost;
 			}
 			mport = extra.getString("port");
 			//Puerto por defecto
@@ -50,6 +59,8 @@ public class Comunicaciones extends Activity implements Cliente{
 				this.mport = defaultport;
 			}
 		}
+		
+		mensaje = new Mensaje();
 		
 		//Llamo al fragmento
 		fm = getFragmentManager();
@@ -62,6 +73,8 @@ public class Comunicaciones extends Activity implements Cliente{
 //				ft.add(R.id.fragment_console2, conectar);
 //				ft.commit();
 //			}
+			mensaje.Autentification(muser, mpass);
+			Enviar(mensaje.getMensaje());
 		}
 		else{
 			if (fragment == null) {
@@ -110,11 +123,46 @@ public class Comunicaciones extends Activity implements Cliente{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	//La idea es crear una nueva conexión para cada operación
+	//entonces le paso el mensaje que vaya a enviar
+	//Antigua conectaSocket
 	@Override
-	public void Enviar(String mensaje) {
-		// TODO Auto-generated method stub
-		
+	public String Enviar(String mensaje) {
+		if (mport != "" && mhost != "") {
+			String contentAsString = "";
+			Socket s = new Socket();
+			InputStream is;
+			DataOutputStream dos;
+
+			try {
+				int port = Integer.parseInt(mport);
+				s = new Socket(mhost, port);
+				
+				is = s.getInputStream();
+				dos = new DataOutputStream(s.getOutputStream());
+				
+				//Por aquí está el trabajo
+				dos.writeUTF("get /index.html HTTP/1.1\r\nHOST=www.ujaen.es\r\n");
+				dos.flush();
+				
+				// Convert the InputStream into a string
+				
+				contentAsString=contentAsString+readIt(is,100);
+				
+				dos.close();
+				is.close();
+				s.close();
+				return contentAsString;
+			} catch (IOException e) {
+				return e.getMessage();
+				
+			} catch (IllegalArgumentException e) {
+				return e.getMessage();
+				
+			}
+		}
+		return "Conexión fallida";
 	}
 
 	@Override
@@ -137,45 +185,6 @@ public class Comunicaciones extends Activity implements Cliente{
 	
 	public String getPort(){
 		return mport;
-	}
-	
-	//La idea es crear una nueva conexión para cada operación
-	public String conectaSocket(){
-		
-		if (mport != "" && mhost != "") {
-			String contentAsString = "";
-			Socket s = new Socket();
-			InputStream is;
-			DataOutputStream dos;
-
-			try {
-				int port = Integer.parseInt(mport);
-				s = new Socket(mhost, port);
-				
-				is = s.getInputStream();
-				dos = new DataOutputStream(s.getOutputStream());
-
-				dos.writeUTF("get /index.html HTTP/1.1\r\nHOST=www.ujaen.es\r\n");
-				dos.flush();
-				
-				// Convert the InputStream into a string
-				
-				contentAsString=contentAsString+readIt(is,100);
-				
-				dos.close();
-				is.close();
-				s.close();
-				return contentAsString;
-			} catch (IOException e) {
-				return e.getMessage();
-				
-			} catch (IllegalArgumentException e) {
-				return e.getMessage();
-				
-			}
-		}
-		return "Conexión fallida";
-
 	}
 	
 	// Reads an InputStream and converts it to a String.

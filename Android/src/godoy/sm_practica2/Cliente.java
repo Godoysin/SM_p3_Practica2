@@ -39,7 +39,7 @@ public interface Cliente{
 	 * Envía datos al servidor.
 	 * @param mensaje
 	 */
-	public void Enviar(String mensaje);
+	public String Enviar(String mensaje);
 	
 	/**
 	 * Recive datos del servidor.
