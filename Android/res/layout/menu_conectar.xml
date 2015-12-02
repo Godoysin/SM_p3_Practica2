@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonconnect2"
         android:layout_centerHorizontal="true"
-        android:text="HOLA" />
+		android:text="@string/hello_world"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

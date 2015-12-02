@@ -16,7 +16,7 @@ public interface Cliente{
 	/**
 	 * Gestiona la conexión con el servidor.
 	 */
-	public void LogIn(String user, String pass, String dominio, String puerto);
+	public Boolean LogIn();
 	
 	/**
 	 * Cierre de sesión

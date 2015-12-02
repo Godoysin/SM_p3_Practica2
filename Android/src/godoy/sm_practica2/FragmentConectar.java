@@ -16,6 +16,7 @@ public class FragmentConectar extends Fragment{
 	private Button mbutton1;
 	private Button mbutton2;
 	private TextView mtext;
+	//ConnectivityManager connMgr = null;
 	
 	public FragmentConectar(){
         //Definir
@@ -34,7 +35,14 @@ public class FragmentConectar extends Fragment{
 		mbutton1.setOnClickListener(new OnClickListener(){
 			public void onClick(View view){
 				//Intento realizar la conexión con el servidor
-				//ConnectivityManager
+//				Comunicaciones com = new Comunicaciones();
+////				mtext.setText(com.getUser()+" "+com.getPass()+" "+com.getDom()+" "+com.getPort()+" alfo");
+//				if(com.LogIn()){
+//					mtext.setText("Conectado");
+//				}
+//				else{
+//					mtext.setText(":(");
+//				}
 			}
 		});
 		

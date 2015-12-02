@@ -5,7 +5,10 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -13,6 +16,10 @@ public class Comunicaciones extends Activity implements Cliente{
 	
 	private String defaultdom = "192.168.1.2";
 	private String defaultport = "6000";
+	private String muser = "";
+	private String mpass = "";
+	private String mdom = "";
+	private String mport = "";
 	FragmentManager fm = null;
 	
 	@Override
@@ -20,31 +27,46 @@ public class Comunicaciones extends Activity implements Cliente{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.servicio);
 		
-		//Declaraciones
-		String user = "";
-		String pass = "";
-		String dom = "";
-		String port = "";
+		//Llamo al fragmento
+		fm = getFragmentManager();
+		Fragment fragment = fm.findFragmentById(R.id.fragment_console2);
+		if(LogIn()){
+			if (fragment == null) {
+				FragmentTransaction ft = fm.beginTransaction();
+				FragmentConectar conectar = new FragmentConectar();
+				ft.add(R.id.fragment_console2, conectar);
+				ft.commit();
+			}
+		}
+		else{
+			if (fragment == null) {
+				FragmentTransaction ft = fm.beginTransaction();
+				FragmentText conectar = new FragmentText();
+				ft.add(R.id.fragment_console2, conectar);
+				ft.commit();
+			}
+		}
+		
 		
 		//Extraigo los datos del Intent
 		Bundle extra = getIntent().getExtras();
 		if(extra != null){
-			user = extra.getString("user");
-			pass = extra.getString("pass");
-			dom = extra.getString("dom");
+			this.muser = extra.getString("user");
+			this.mpass = extra.getString("pass");
+			this.mdom = extra.getString("dom");
 			//Dominio por defecto
-			if(dom.compareTo("") == 0){
-				dom = defaultdom;
+			if(mdom.compareTo("") == 0){
+				this.mdom = defaultdom;
 			}
-			port = extra.getString("port");
+			mport = extra.getString("port");
 			//Puerto por defecto
-			if(port.compareTo("") == 0){
-				port = defaultport;
+			if(mport.compareTo("") == 0){
+				this.mport = defaultport;
 			}
 		}
 		
 		//Inicia la conexión con el servidor
-		LogIn(user, pass, dom, port);
+		//LogIn(user, pass, dom, port);
 		
 		//TODO con los datos intentar conectarme a la máquina de turno
 		//Control de errores
@@ -54,17 +76,21 @@ public class Comunicaciones extends Activity implements Cliente{
 	}
 
 	@Override
-	public void LogIn(String user, String pass, String dominio, String puerto){
-		//Llamo al fragmento que controla la conexion
-		fm = getFragmentManager();
-		Fragment fragment = fm.findFragmentById(R.id.fragment_console2);
-		if (fragment == null) {
-			FragmentTransaction ft = fm.beginTransaction();
-			FragmentConectar conectar = new FragmentConectar();
-			ft.add(R.id.fragment_console2, conectar);
-			ft.commit();
-		}
+	public Boolean LogIn(){
+		Boolean connection = false;
 		//TODO conexión con el servidor
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if(networkInfo != null && networkInfo.isConnected()){
+			//obtener los datos
+			connection = true;
+			
+			}
+		else{
+			//mostrar el error
+			connection = false;
+		}
+		return connection;
 	}
 
 	@Override
@@ -95,5 +121,21 @@ public class Comunicaciones extends Activity implements Cliente{
 	public void Recivir(String datos) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public String getUser(){
+		return muser;
+	}
+	
+	public String getPass(){
+		return mpass;
+	}
+	
+	public String getDom(){
+		return mdom;
+	}
+	
+	public String getPort(){
+		return mport;
 	}
 }
