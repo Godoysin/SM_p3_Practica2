@@ -74,7 +74,7 @@ public class Connection implements Runnable {
 					} else
 						outputData = "ERROR [" + inputData + "] NO ES UN COMANDO VALIDO\r\n";
 
-					output.write(outputData.getBytes());
+					output.writeUTF(outputData);
 
 				}
 				System.out.println(
