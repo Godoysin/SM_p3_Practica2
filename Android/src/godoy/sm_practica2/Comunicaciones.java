@@ -70,15 +70,15 @@ public class Comunicaciones extends Activity implements Cliente{
 		Fragment fragment = fm.findFragmentById(R.id.fragment_console2);
 		if(LogIn()){
 //			TODO llegado a este punto me toca implementar el socket
-			if (fragment == null) {
-				FragmentTransaction ft = fm.beginTransaction();
-				FragmentConectar conectar = new FragmentConectar();
-				ft.add(R.id.fragment_console2, conectar);
-				ft.commit();
-			}
+//			if (fragment == null) {
+//				FragmentTransaction ft = fm.beginTransaction();
+//				FragmentConectar conectar = new FragmentConectar();
+//				ft.add(R.id.fragment_console2, conectar);
+//				ft.commit();
+//			}
 			mensaje.Autentification(muser, mpass);
 			Prueba prueba = new Prueba();
-			prueba.execute();
+			prueba.execute(mensaje.getMensaje(),null,null);
 //			mensaje.getMensaje()
 		}
 		else{
@@ -135,40 +135,7 @@ public class Comunicaciones extends Activity implements Cliente{
 	
 	private class Prueba extends AsyncTask<String, Integer, String>{
 		protected String doInBackground(String mensaje){
-			if (mport != "" && mhost != "") {
-				String contentAsString = "";
-				Socket s = new Socket();
-				InputStream is;
-				DataOutputStream dos;
-
-				try {
-					int port = Integer.parseInt(mport);
-					s = new Socket(mhost, port);
-					
-					//Error
-					is = s.getInputStream();
-					dos = new DataOutputStream(s.getOutputStream());
-					
-					//Por aquí está el trabajo
-					dos.writeUTF(mensaje);
-					dos.flush();
-					
-					// Convert the InputStream into a string
-					contentAsString=contentAsString+readIt(is,100);
-					
-					dos.close();
-					is.close();
-					s.close();
-					return contentAsString;
-				} catch (IOException e) {
-					return e.getMessage();
-					
-				} catch (IllegalArgumentException e) {
-					return e.getMessage();
-					
-				}
-			}
-			return "Conexión fallida";
+			return Enviar(mensaje);
 		}
 		protected void onPostExecute(String registrado) {
 			
@@ -234,7 +201,39 @@ public class Comunicaciones extends Activity implements Cliente{
 
 	@Override
 	public String Enviar(String mensaje) {
-		// TODO Auto-generated method stub
-		return null;
+		if (mport != "" && mhost != "") {
+			String contentAsString = "";
+			Socket s = new Socket();
+			InputStream is;
+			DataOutputStream dos;
+
+			try {
+				int port = Integer.parseInt(mport);
+				s = new Socket(mhost, port);
+				
+				//Error
+				is = s.getInputStream();
+				dos = new DataOutputStream(s.getOutputStream());
+				
+				//Por aquí está el trabajo
+				dos.writeUTF(mensaje);
+				dos.flush();
+				
+				// Convert the InputStream into a string
+				contentAsString=contentAsString+readIt(is,100);
+				
+				dos.close();
+				is.close();
+				s.close();
+				return contentAsString;
+			} catch (IOException e) {
+				return e.getMessage();
+				
+			} catch (IllegalArgumentException e) {
+				return e.getMessage();
+				
+			}
+		}
+		return "Conexión fallida";
 	}
 }
