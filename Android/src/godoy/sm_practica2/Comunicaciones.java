@@ -34,7 +34,7 @@ public class Comunicaciones extends Activity implements Cliente{
 	private String mpass = "";
 	private String mhost = "";
 	private String mport = "";
-	private Enviar envio = null;
+	private Prueba envio = null;
 	FragmentManager fm = null;
 	Mensaje mensaje;
 	
@@ -69,15 +69,17 @@ public class Comunicaciones extends Activity implements Cliente{
 		fm = getFragmentManager();
 		Fragment fragment = fm.findFragmentById(R.id.fragment_console2);
 		if(LogIn()){
-			//TODO llegado a este punto me toca implementar el socket
-//			if (fragment == null) {
-//				FragmentTransaction ft = fm.beginTransaction();
-//				FragmentConectar conectar = new FragmentConectar();
-//				ft.add(R.id.fragment_console2, conectar);
-//				ft.commit();
-//			}
+//			TODO llegado a este punto me toca implementar el socket
+			if (fragment == null) {
+				FragmentTransaction ft = fm.beginTransaction();
+				FragmentConectar conectar = new FragmentConectar();
+				ft.add(R.id.fragment_console2, conectar);
+				ft.commit();
+			}
 			mensaje.Autentification(muser, mpass);
-			Enviar(mensaje.getMensaje());
+			Prueba prueba = new Prueba();
+			prueba.execute();
+//			mensaje.getMensaje()
 		}
 		else{
 			if (fragment == null) {
@@ -131,7 +133,7 @@ public class Comunicaciones extends Activity implements Cliente{
 	//entonces le paso el mensaje que vaya a enviar
 	//Antigua conectaSocket
 	
-	private class Enviar extends AsyncTask<String, Integer, String>{
+	private class Prueba extends AsyncTask<String, Integer, String>{
 		protected String doInBackground(String mensaje){
 			if (mport != "" && mhost != "") {
 				String contentAsString = "";
@@ -228,5 +230,11 @@ public class Comunicaciones extends Activity implements Cliente{
 			
 		reader.read(buffer);
 		return new String(buffer);
+	}
+
+	@Override
+	public String Enviar(String mensaje) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
