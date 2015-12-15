@@ -134,16 +134,12 @@ public class Comunicaciones extends Activity implements Cliente{
 	//Antigua conectaSocket
 	
 	private class Prueba extends AsyncTask<String, Integer, String>{
-		protected String doInBackground(String mensaje){
-			return Enviar(mensaje);
+		@Override
+		protected String doInBackground(String... mensaje){
+			return Enviar(mensaje[0]);
 		}
 		protected void onPostExecute(String registrado) {
 			
-		}
-		@Override
-		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
-			return null;
 		}
 		
 	}
