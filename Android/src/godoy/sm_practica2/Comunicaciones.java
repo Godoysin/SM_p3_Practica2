@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 public class Comunicaciones extends Activity implements Cliente{
 	
-	private static String defaulthost = "10.82.248.160";
+	private static String defaulthost = "192.168.15.103";
 	private String defaultport = "6000";
 	private String muser = "";
 	private String mpass = "";
@@ -43,15 +43,20 @@ public class Comunicaciones extends Activity implements Cliente{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.servicio);
 		
-		//Obtendo la ip de mi equipo
-		defaulthost = getLocalIpAddress();
-		
 		//Extraigo los datos del Intent
 		Bundle extra = getIntent().getExtras();
 		if(extra != null){
 			this.muser = extra.getString("user");
 			this.mpass = extra.getString("pass");
 			this.mhost = extra.getString("dom");
+			//Nombre por defecto
+			if(muser.compareTo("") == 0){
+				this.muser = "usuario";
+			}
+			//Clave por defecto
+			if(mpass.compareTo("") == 0){
+				this.mpass = "clave";
+			}
 			//Dominio por defecto
 			if(mhost.compareTo("") == 0){
 				this.mhost = defaulthost;
@@ -76,6 +81,16 @@ public class Comunicaciones extends Activity implements Cliente{
 //				ft.add(R.id.fragment_console2, conectar);
 //				ft.commit();
 //			}
+			//TODO ¿?¿?¿?¿?
+			Pintar(muser);
+			Pintar(mpass);
+//			Bundle bundle = new Bundle();
+//			bundle.putString(FragmentText.PARAMETRO, muser);
+//			FragmentText algo = FragmentText.newInstance(bundle);
+//			FragmentMa
+			//algo.newInstance(bundle);
+			
+			
 			mensaje.Autentification(muser, mpass);
 			Prueba prueba = new Prueba();
 			prueba.execute(mensaje.getMensaje(),null,null);
@@ -199,7 +214,7 @@ public class Comunicaciones extends Activity implements Cliente{
 	public String Enviar(String mensaje) {
 		if (mport != "" && mhost != "") {
 			String contentAsString = "";
-			Socket s = new Socket();
+			Socket s = null;
 			InputStream is;
 			DataOutputStream dos;
 
@@ -231,5 +246,24 @@ public class Comunicaciones extends Activity implements Cliente{
 			}
 		}
 		return "Conexión fallida";
+	}
+	public void Pintar(String text){
+		
+		Bundle bundle = new Bundle();
+		bundle.putString(FragmentText.PARAMETRO, text);
+		
+		
+		FragmentTransaction ft = fm.beginTransaction();
+		Fragment f = fm.findFragmentById(R.id.fragment_text2);
+		FragmentText pinto = FragmentText.newInstance(bundle);
+		if(f != null){
+			ft.remove(f);
+			ft.replace(R.id.fragment_text2, pinto);
+		}
+		else{
+			ft.add(R.id.fragment_text2, pinto);
+		}
+		ft.add(R.id.fragment_text2, pinto);
+		ft.commit();
 	}
 }
