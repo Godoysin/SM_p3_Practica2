@@ -15,12 +15,7 @@ public class FragmentConectar extends Fragment{
 	
 	private Button mbutton1;
 	private Button mbutton2;
-	private TextView mtext;
-	//ConnectivityManager connMgr = null;
-	
-	public FragmentConectar(){
-        //Definir
-    }
+	private Comunicaciones com = null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,19 +25,12 @@ public class FragmentConectar extends Fragment{
 		
 		mbutton1 = (Button) view.findViewById(R.id.buttonconnect1);
 		mbutton2 = (Button) view.findViewById(R.id.buttonconnect2);
-		mtext = (TextView) view.findViewById(R.id.textconnect);
 		
 		mbutton1.setOnClickListener(new OnClickListener(){
 			public void onClick(View view){
 				//Intento realizar la conexión con el servidor
-//				Comunicaciones com = new Comunicaciones();
-////				mtext.setText(com.getUser()+" "+com.getPass()+" "+com.getDom()+" "+com.getPort()+" alfo");
-//				if(com.LogIn()){
-//					mtext.setText("Conectado");
-//				}
-//				else{
-//					mtext.setText(":(");
-//				}
+//				com = new Comunicaciones();
+//				com.Pintar("hola");
 			}
 		});
 		

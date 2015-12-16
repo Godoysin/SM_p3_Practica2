@@ -21,7 +21,6 @@ public class FragmentText extends Fragment{
         
         mtextview = (TextView)view.findViewById(R.id.fragment_text);
         mtextview.setText(mtext);
-        
         return view;
     }
     

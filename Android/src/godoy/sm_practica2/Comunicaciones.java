@@ -74,27 +74,16 @@ public class Comunicaciones extends Activity implements Cliente{
 		fm = getFragmentManager();
 		Fragment fragment = fm.findFragmentById(R.id.fragment_console2);
 		if(LogIn()){
-//			TODO llegado a este punto me toca implementar el socket
-//			if (fragment == null) {
-//				FragmentTransaction ft = fm.beginTransaction();
-//				FragmentConectar conectar = new FragmentConectar();
-//				ft.add(R.id.fragment_console2, conectar);
-//				ft.commit();
-//			}
-			//TODO ¿?¿?¿?¿?
-			Pintar(muser);
-			Pintar(mpass);
-//			Bundle bundle = new Bundle();
-//			bundle.putString(FragmentText.PARAMETRO, muser);
-//			FragmentText algo = FragmentText.newInstance(bundle);
-//			FragmentMa
-			//algo.newInstance(bundle);
-			
-			
 			mensaje.Autentification(muser, mpass);
 			Prueba prueba = new Prueba();
 			prueba.execute(mensaje.getMensaje(),null,null);
-//			mensaje.getMensaje()
+			if (fragment == null) {
+				FragmentTransaction ft = fm.beginTransaction();
+				FragmentConectar conectar = new FragmentConectar();
+				ft.add(R.id.fragment_console2, conectar);
+				ft.commit();
+			}
+			Pintar(muser);
 		}
 		else{
 			if (fragment == null) {
@@ -110,7 +99,6 @@ public class Comunicaciones extends Activity implements Cliente{
 	@Override
 	public Boolean LogIn(){
 		Boolean connection = false;
-		//TODO conexión con el servidor
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if(networkInfo != null && networkInfo.isConnected()){
@@ -247,6 +235,7 @@ public class Comunicaciones extends Activity implements Cliente{
 		}
 		return "Conexión fallida";
 	}
+	//TODO
 	public void Pintar(String text){
 		
 		Bundle bundle = new Bundle();
@@ -257,13 +246,11 @@ public class Comunicaciones extends Activity implements Cliente{
 		Fragment f = fm.findFragmentById(R.id.fragment_text2);
 		FragmentText pinto = FragmentText.newInstance(bundle);
 		if(f != null){
-			ft.remove(f);
 			ft.replace(R.id.fragment_text2, pinto);
 		}
 		else{
 			ft.add(R.id.fragment_text2, pinto);
 		}
-		ft.add(R.id.fragment_text2, pinto);
 		ft.commit();
 	}
 }
