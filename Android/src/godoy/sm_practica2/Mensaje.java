@@ -49,11 +49,11 @@ public class Mensaje{
 //	}
 	
 	public void Autentification(int autenticado, String user, String pass){
-		this.mensaje = Integer.toString(autenticacion)+" "+autenticado+" "+user+" "+pass;
+		this.mensaje = " "+Integer.toString(autenticacion)+" "+Integer.toString(autenticado)+" "+user+" "+pass;
 	}
 	
 	public void Operacion(int autenticado, int value){
-		this.mensaje = Integer.toString(operacion)+" "+autenticado+" "+value;
+		this.mensaje = " "+Integer.toString(operacion)+" "+Integer.toString(autenticado)+" "+Integer.toString(value);
 	}
 	
 //	/**

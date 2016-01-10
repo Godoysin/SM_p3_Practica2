@@ -62,7 +62,7 @@ public class Comunicaciones extends Activity implements Cliente{
 			if(mhost.compareTo("") == 0){
 				this.mhost = default_host;
 			}
-			mport = extra.getString("port");
+			this.mport = extra.getString("port");
 			//Puerto por defecto
 			if(mport.compareTo("") == 0){
 				this.mport = default_port;
@@ -87,16 +87,13 @@ public class Comunicaciones extends Activity implements Cliente{
 			envio = new Prueba();
 			//Envio el mensaje al servidor
 			envio.execute(mensaje.getMensaje(),null,null);
-			mensaje.Autentification(autenticado,muser, mpass);
-			Prueba prueba = new Prueba();
-			prueba.execute(mensaje.getMensaje(),null,null);
-			if (fragment == null) {
-				FragmentTransaction ft = fm.beginTransaction();
-				FragmentConectar conectar = new FragmentConectar();
-				ft.add(R.id.fragment_console2, conectar);
-				ft.commit();
-			}
-			Pintar(muser);
+//			if (fragment == null) {
+//				FragmentTransaction ft = fm.beginTransaction();
+//				FragmentConectar conectar = new FragmentConectar();
+//				ft.add(R.id.fragment_console2, conectar);
+//				ft.commit();
+//			}
+//			Pintar(muser);
 		}
 		else{
 			if (fragment == null) {
@@ -155,13 +152,13 @@ public class Comunicaciones extends Activity implements Cliente{
 			return Enviar(mensaje[0]);
 		}
 		protected void onPostExecute(String reply) {
-			Recivir(reply);
+			Recibir(reply);
 		}
 		
 	}
 
 	@Override
-	public void Recivir(String datos) {
+	public void Recibir(String datos) {
 		this.respuesta = datos;
 	}
 	

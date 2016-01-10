@@ -45,5 +45,5 @@ public interface Cliente{
 	 * Recive datos del servidor.
 	 * @param datos
 	 */
-	public void Recivir(String datos);
+	public void Recibir(String datos);
 }
