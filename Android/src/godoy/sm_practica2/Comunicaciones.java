@@ -28,12 +28,17 @@ import android.widget.Toast;
 
 public class Comunicaciones extends Activity implements Cliente{
 	
-	private static String defaulthost = "10.82.248.160";
-	private String defaultport = "6000";
+	private static String default_user = "user1";
+	private static String default_pass = "123456";
+	private static String default_host = "192.168.1.131";
+//	private static String defaulthost = "10.82.248.160";
+	private static String default_port = "6000";
+	private int autenticado = 0;
 	private String muser = "";
 	private String mpass = "";
 	private String mhost = "";
 	private String mport = "";
+	private String respuesta = "";
 	private Prueba envio = null;
 	FragmentManager fm = null;
 	Mensaje mensaje;
@@ -43,26 +48,31 @@ public class Comunicaciones extends Activity implements Cliente{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.servicio);
 		
-		//Obtendo la ip de mi equipo
-		defaulthost = getLocalIpAddress();
-		
 		//Extraigo los datos del Intent
 		Bundle extra = getIntent().getExtras();
 		if(extra != null){
 			this.muser = extra.getString("user");
+			//Usuario por defecto
+			if(muser.compareTo("") == 0){
+				muser = default_user;
+			}
 			this.mpass = extra.getString("pass");
+			//Clave por defecto
+			if(mpass.compareTo("") == 0){
+				mpass = default_pass;
+			}
 			this.mhost = extra.getString("dom");
 			//Dominio por defecto
 			if(mhost.compareTo("") == 0){
-				this.mhost = defaulthost;
+				this.mhost = default_host;
 			}
 			mport = extra.getString("port");
 			//Puerto por defecto
 			if(mport.compareTo("") == 0){
-				this.mport = defaultport;
+				this.mport = default_port;
 			}
 		}
-		
+		//Inicializo la clase de los mensajes
 		mensaje = new Mensaje();
 		
 		//Llamo al fragmento
@@ -76,10 +86,11 @@ public class Comunicaciones extends Activity implements Cliente{
 //				ft.add(R.id.fragment_console2, conectar);
 //				ft.commit();
 //			}
-			mensaje.Autentification(muser, mpass);
-			Prueba prueba = new Prueba();
-			prueba.execute(mensaje.getMensaje(),null,null);
-//			mensaje.getMensaje()
+			//Creo el mensaje de autenticación
+			mensaje.Autentification(autenticado, muser, mpass);
+			envio = new Prueba();
+			//Envio el mensaje al servidor
+			envio.execute(mensaje.getMensaje(),null,null);
 		}
 		else{
 			if (fragment == null) {
@@ -138,16 +149,15 @@ public class Comunicaciones extends Activity implements Cliente{
 		protected String doInBackground(String... mensaje){
 			return Enviar(mensaje[0]);
 		}
-		protected void onPostExecute(String registrado) {
-			
+		protected void onPostExecute(String reply) {
+			Recivir(reply);
 		}
 		
 	}
 
 	@Override
 	public void Recivir(String datos) {
-		// TODO Auto-generated method stub
-		
+		this.respuesta = datos;
 	}
 	
 	public String getUser(){
@@ -164,24 +174,6 @@ public class Comunicaciones extends Activity implements Cliente{
 	
 	public String getPort(){
 		return mport;
-	}
-	
-	//Obtiene la ip del equipo
-	public static String getLocalIpAddress() {
-	    try {
-	        for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
-	            NetworkInterface intf = en.nextElement();
-	            for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
-	                InetAddress inetAddress = enumIpAddr.nextElement();
-	                if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
-	                    return inetAddress.getHostAddress();
-	                }
-	            }
-	        }
-	    } catch (SocketException ex) {
-	        ex.printStackTrace();
-	    }
-	    return null;
 	}
 	
 	// Reads an InputStream and converts it to a String.
@@ -231,5 +223,15 @@ public class Comunicaciones extends Activity implements Cliente{
 			}
 		}
 		return "Conexión fallida";
+	}
+	public void AnalizaRespuesta(){
+		//TODO sería interesante saber hacer lo de escribir en FragmentText y que se vaya imprimiendo ahí todo
+		String[] respuestas = respuesta.split(" ");
+		if(respuestas.length == 2){
+			this.autenticado = Integer.valueOf(respuestas[1]);
+		}
+		else if(respuestas.length == 3){
+			
+		}
 	}
 }

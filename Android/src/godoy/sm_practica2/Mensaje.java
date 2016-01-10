@@ -13,9 +13,13 @@ import java.io.IOException;
 public class Mensaje{
 	
 	/**
-	 * Permitirá ordenar los mensajes ya que estos iran en un orden determinado.
+	 * Diferencia los mensajes de autenticación.
 	 */
-	protected static int secuencia;
+	protected static int autenticacion = 0;
+	/**
+	 * Diferencia los mensajes de operaciones.
+	 */
+	protected static int operacion = 1;
 	/**
 	 * Representa los mensajes que se envían o reciben.
 	 */
@@ -44,12 +48,12 @@ public class Mensaje{
 //		secuencia++;
 //	}
 	
-	public void Autentification(String user, String pass){
-		this.mensaje = Integer.toString(secuencia)+" "+user+" "+pass;
+	public void Autentification(int autenticado, String user, String pass){
+		this.mensaje = Integer.toString(autenticacion)+" "+autenticado+" "+user+" "+pass;
 	}
 	
-	public void Operacion(int operacion){
-		this.mensaje = Integer.toString(secuencia)+" "+operacion;
+	public void Operacion(int autenticado, int value){
+		this.mensaje = Integer.toString(operacion)+" "+autenticado+" "+value;
 	}
 	
 //	/**
