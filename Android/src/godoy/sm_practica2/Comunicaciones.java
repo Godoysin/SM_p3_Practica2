@@ -6,12 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.Socket;
-import java.net.SocketException;
-import java.util.Enumeration;
 
 import godoy.sm_practica2.R;
 import android.app.Activity;
@@ -32,6 +27,7 @@ public class Comunicaciones extends Activity implements Cliente{
 	private static String default_pass = "123456";
 	private static String default_host = "192.168.1.131";
 //	private static String defaulthost = "10.82.248.160";
+//	private static String defaulthost = "192.168.15.103";
 	private static String default_port = "6000";
 	private int autenticado = 0;
 	private String muser = "";
@@ -91,6 +87,16 @@ public class Comunicaciones extends Activity implements Cliente{
 			envio = new Prueba();
 			//Envio el mensaje al servidor
 			envio.execute(mensaje.getMensaje(),null,null);
+			mensaje.Autentification(autenticado,muser, mpass);
+			Prueba prueba = new Prueba();
+			prueba.execute(mensaje.getMensaje(),null,null);
+			if (fragment == null) {
+				FragmentTransaction ft = fm.beginTransaction();
+				FragmentConectar conectar = new FragmentConectar();
+				ft.add(R.id.fragment_console2, conectar);
+				ft.commit();
+			}
+			Pintar(muser);
 		}
 		else{
 			if (fragment == null) {
@@ -106,7 +112,6 @@ public class Comunicaciones extends Activity implements Cliente{
 	@Override
 	public Boolean LogIn(){
 		Boolean connection = false;
-		//TODO conexión con el servidor
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if(networkInfo != null && networkInfo.isConnected()){
@@ -191,7 +196,7 @@ public class Comunicaciones extends Activity implements Cliente{
 	public String Enviar(String mensaje) {
 		if (mport != "" && mhost != "") {
 			String contentAsString = "";
-			Socket s = new Socket();
+			Socket s = null;
 			InputStream is;
 			DataOutputStream dos;
 
@@ -233,5 +238,23 @@ public class Comunicaciones extends Activity implements Cliente{
 		else if(respuestas.length == 3){
 			
 		}
+	}
+	//TODO
+	public void Pintar(String text){
+		
+		Bundle bundle = new Bundle();
+		bundle.putString(FragmentText.PARAMETRO, text);
+		
+		
+		FragmentTransaction ft = fm.beginTransaction();
+		Fragment f = fm.findFragmentById(R.id.fragment_text2);
+		FragmentText pinto = FragmentText.newInstance(bundle);
+		if(f != null){
+			ft.replace(R.id.fragment_text2, pinto);
+		}
+		else{
+			ft.add(R.id.fragment_text2, pinto);
+		}
+		ft.commit();
 	}
 }
