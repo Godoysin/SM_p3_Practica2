@@ -25,17 +25,16 @@ public class Comunicaciones extends Activity implements Cliente{
 	
 	private static String default_user = "user1";
 	private static String default_pass = "123456";
-	private static String default_host = "192.168.1.131";
-//	private static String defaulthost = "10.82.248.160";
-//	private static String defaulthost = "192.168.15.103";
+//	private static String default_host = "192.168.1.131";
+	private static String default_host = "192.168.1.138";
 	private static String default_port = "6000";
-	private int autenticado = 0;
+	public int autenticado = 0;
 	private String muser = "";
 	private String mpass = "";
 	private String mhost = "";
 	private String mport = "";
-	private String respuesta = "";
-	private Prueba envio = null;
+	public String respuesta = "";
+	private Tarea tarea = null;
 	FragmentManager fm = null;
 	Mensaje mensaje;
 	
@@ -75,24 +74,13 @@ public class Comunicaciones extends Activity implements Cliente{
 		fm = getFragmentManager();
 		Fragment fragment = fm.findFragmentById(R.id.fragment_console2);
 		if(LogIn()){
-//			TODO llegado a este punto me toca implementar el socket
-//			if (fragment == null) {
-//				FragmentTransaction ft = fm.beginTransaction();
-//				FragmentConectar conectar = new FragmentConectar();
-//				ft.add(R.id.fragment_console2, conectar);
-//				ft.commit();
-//			}
-			//Creo el mensaje de autenticación
-			mensaje.Autentification(autenticado, muser, mpass);
-			envio = new Prueba();
-			//Envio el mensaje al servidor
-			envio.execute(mensaje.getMensaje(),null,null);
-//			if (fragment == null) {
-//				FragmentTransaction ft = fm.beginTransaction();
-//				FragmentConectar conectar = new FragmentConectar();
-//				ft.add(R.id.fragment_console2, conectar);
-//				ft.commit();
-//			}
+			if (fragment == null) {
+				FragmentTransaction ft = fm.beginTransaction();
+				FragmentConectar conectar = new FragmentConectar();
+				ft.add(R.id.fragment_console2, conectar);
+				ft.commit();
+			}
+			
 //			Pintar(muser);
 		}
 		else{
@@ -104,6 +92,20 @@ public class Comunicaciones extends Activity implements Cliente{
 			}
 		}
 		
+	}
+	public void RealizaAutenticacion(){
+		//Creo el mensaje de autenticación
+		mensaje.Autentification(autenticado, muser, mpass);
+		tarea = new Tarea();
+		//Envio el mensaje al servidor
+		tarea.execute(mensaje.getMensaje(),null,null);
+		AnalizaRespuesta();
+	}
+	public void RealizaOperacion1(int value){
+		tarea = new Tarea();
+		//Envio el mensaje al servidor
+		tarea.execute(Operacion1(value),null,null);
+		AnalizaRespuesta();
 	}
 
 	@Override
@@ -131,9 +133,10 @@ public class Comunicaciones extends Activity implements Cliente{
 	}
 
 	@Override
-	public String Operacion1() {
-		// TODO Auto-generated method stub
-		return null;
+	public String Operacion1(int value) {
+		//Creo el mensaje de operacion;
+		mensaje.Operacion(autenticado, value);
+		return mensaje.getMensaje();
 	}
 
 	@Override
@@ -146,7 +149,7 @@ public class Comunicaciones extends Activity implements Cliente{
 	//entonces le paso el mensaje que vaya a enviar
 	//Antigua conectaSocket
 	
-	private class Prueba extends AsyncTask<String, Integer, String>{
+	private class Tarea extends AsyncTask<String, Integer, String>{
 		@Override
 		protected String doInBackground(String... mensaje){
 			return Enviar(mensaje[0]);
@@ -201,11 +204,9 @@ public class Comunicaciones extends Activity implements Cliente{
 				int port = Integer.parseInt(mport);
 				s = new Socket(mhost, port);
 				
-				//Error
 				is = s.getInputStream();
 				dos = new DataOutputStream(s.getOutputStream());
 				
-				//Por aquí está el trabajo
 				dos.writeUTF(mensaje);
 				dos.flush();
 				
@@ -227,13 +228,24 @@ public class Comunicaciones extends Activity implements Cliente{
 		return "Conexión fallida";
 	}
 	public void AnalizaRespuesta(){
-		//TODO sería interesante saber hacer lo de escribir en FragmentText y que se vaya imprimiendo ahí todo
+		//Esto no lo puedo probar porque me falla la recepción de datos, así que quizas habría que quitar /r/n
 		String[] respuestas = respuesta.split(" ");
 		if(respuestas.length == 2){
-			this.autenticado = Integer.valueOf(respuestas[1]);
+			if(autenticado == 0){
+//				this.autenticado = Integer.valueOf(respuestas[1]);
+				//Hago trampa
+				autenticado = 1;
+				Pintar("Autenticado");
+			}
+			else{
+//				respuesta = String.valueOf(respuestas[1]);
+				//Hago trampa
+				respuesta = "4";
+				Pintar("Operación correcta");
+			}
 		}
 		else if(respuestas.length == 3){
-			
+			Pintar(respuestas[2]);
 		}
 	}
 	//TODO

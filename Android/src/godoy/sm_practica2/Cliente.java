@@ -27,7 +27,7 @@ public interface Cliente{
 	 * Una de las operaciones a implementar.
 	 * @return Devuelve un string con la información correspondiente a al operación.
 	 */
-	public String Operacion1();
+	public String Operacion1(int value);
 	
 	/**
 	 * Otra de las operaciones a implementar.

@@ -47,6 +47,7 @@ public class FragmentConsole extends Fragment{
         		String port = mport.getText().toString();
         		
         		//Llamo al activity comunicaciones y le paso los datos
+        		//TODO no sé que he tocado que no funciona ahora
         		Intent intent = new Intent(getActivity(), Comunicaciones.class);
         		intent.putExtra("user", user);
         		intent.putExtra("pass", pass);

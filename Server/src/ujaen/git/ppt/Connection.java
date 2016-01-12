@@ -10,7 +10,7 @@ import java.net.SocketException;
 
 public class Connection implements Runnable {
 	protected String error;
-	protected String errors[] = {"Usuario incorrecto","Clave incorrecta","Ya autenticado","No autenticado","Formato numérico incorrecto","Error en la secuencia de mansajes"};
+	protected String errors[] = {"Usuario_incorrecto","Clave_incorrecta","Ya_autenticado","No_autenticado","Formato_numérico_incorrecto","Error_en_la_secuencia_de_mansajes"};
 	public static String MSG_WELCOME = "OK Bienvenido al servidor de pruebas\r\n";
 	public static String CRLF = "/r/n";
 	Socket mSocket;
@@ -24,7 +24,7 @@ public class Connection implements Runnable {
 		String inputData = null;
 		String outputData = "";
 		String campos[];
-		String parametro[] = {};
+		String parametro[] = {"a","b","c"};
 		int comando;
 		int estado;
 		int autenticado[] = {0,1};
@@ -37,27 +37,29 @@ public class Connection implements Runnable {
 				DataOutputStream output = new DataOutputStream(mSocket.getOutputStream());
 				BufferedReader input = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));
 				
-				output.write(MSG_WELCOME.getBytes());
+//				output.write(MSG_WELCOME.getBytes());
 
 				while((inputData = input.readLine()) != null){
 					System.out.println("Servidor [Recibido]> " + inputData);
 					campos = inputData.split(" ");
 					
 					if(DetectarError(campos)){
-						if(campos.length == 4){
-							comando = Integer.valueOf(campos[1]);
-							parametro[0] = campos[2];
-							parametro[1] = campos[3];
+						String corte = inputData.substring(3);
+						campos = corte.split(" ");
+						if(campos.length == 3){
+							comando = Integer.valueOf(campos[0]);
+							parametro[0] = campos[1];
+							parametro[1] = campos[2];
 							if(comando == 1){
 								ok = true;
 								estado = 1;
 							}
 						}
-						else if(campos.length == 5){
-							comando = Integer.valueOf(campos[1]);
-							parametro[0] = campos[2];
-							parametro[1] = campos[3];
-							parametro[2] = campos[4];
+						else if(campos.length == 4){
+							comando = Integer.valueOf(campos[0]);
+							parametro[0] = campos[1];
+							parametro[1] = campos[2];
+							parametro[2] = campos[3];
 							if(comando == 0){
 								ok = true;
 								estado = 0;
@@ -109,16 +111,16 @@ public class Connection implements Runnable {
 									outputData = "OK " +  power + CRLF;
 								}
 								catch (NumberFormatException ex) {
-									outputData = "ER " + this.errors[4] + CRLF;
+									outputData = "ER " + autenticado[1] + " " + this.errors[4] + CRLF;
 								}
 							}
 							else{
-								outputData = "ER "+ this.errors[3] + CRLF;
+								outputData = "ER " + autenticado[1] + " " + this.errors[3] + CRLF;
 							}
 						}
 					}
 					else{
-						outputData = "ER "+ this.errors[5] + CRLF;
+						outputData = "ER " + autenticado[0] + " " + this.errors[5] + CRLF;
 					}
 
 					output.write(outputData.getBytes());

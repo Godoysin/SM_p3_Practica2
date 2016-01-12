@@ -9,9 +9,22 @@
         android:id="@+id/buttonmenu1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/numbermenu"
         android:layout_centerHorizontal="true"
         android:text="Operación 1" />
+
+    <EditText
+        android:id="@+id/numbermenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Valor"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
 
     <Button
         android:id="@+id/buttonmenu2"
@@ -19,6 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonmenu1"
         android:layout_centerHorizontal="true"
-        android:text="Operación 2" />
+        android:text="Salir" />
 
 </RelativeLayout>
